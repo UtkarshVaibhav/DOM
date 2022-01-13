@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display II</title>
+    <style>
+        td,tr,th{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label for="name">Employee Name</label><br>
+        <input type="text" placeholder="Name" id="name">
+        <select name="department" id="department">
+            <option value="">Select department</option>
+            <option value="SALES">Sales</option>
+            <option value="IT">IT</option>
+            <option value="NETWORK">Network</option>
+            <option value="HELP DESK">Help Desk</option>
+        </select><br>
+        <label for="year1">Sales Year1</label> <br>
+        <input type="text" placeholder="Enter Amount" id="sales1"> <br>
+        <label for="year2">Sales Year2</label><br>
+        <input type="text" placeholder="Enter Amount" id="sales2"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Sales Year1</th>
+                <th>Sales Year2</th>
+                <th>AVG sales</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <button id="asc">Ascending</button>
+    <button id="dec">Descending</button>
+</body>
+</html>
+<script>
+    document.querySelector("#form").addEventListener("submit",printData);
+    var td1,td2,td3,td4,td5;
+    function printData(event)
+    {
+        var name=document.querySelector("#name").value;
+        var depart=document.querySelector("#department").value;
+        var year1=+document.querySelector("#sales1").value;
+        var year2=+document.querySelector("#sales2").value;
+        event.preventDefault();
+        var tr=document.createElement("tr");
+        td1=document.createElement("td");
+        td1.textContent = name;
+        td2=document.createElement("td");
+        td2.textContent=depart;
+        td3=document.createElement("td");
+        td3.textContent=year1;
+        td4=document.createElement("td");
+        td4.textContent=year2;
+        td5=document.createElement("td");
+        td5.textContent=(year1+year2)/2;
+        tr.append(td1,td2,td3,td4,td5);
+        document.querySelector("tbody").append(tr);
+    }
+    document.querySelector("#asc").addEventListener("click",sortAsc);
+    function sortAsc() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.querySelector("table");
+    switching = true;
+    while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[4];
+      y = rows[i + 1].getElementsByTagName("TD")[4];
+       if (+x.textContent > +y.textContent) {
+               shouldSwitch = true;
+                break;
+             }
+         }
+         if (shouldSwitch) {
+       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+       switching = true;
+    }
+    }
+}
+    document.querySelector("#dec").addEventListener("click",sortDec);
+    function sortDec(){
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.querySelector("table");
+        switching = true;
+        while (switching) {
+        switching = false;
+        rows = table.rows;
+         for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[4];
+        y = rows[i + 1].getElementsByTagName("TD")[4];
+        if (+x.textContent < +y.textContent) {
+        shouldSwitch = true;
+        break;
+            }
+        }
+        if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        }
+    }
+    }
+</script>
